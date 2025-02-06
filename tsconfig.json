@@ -7,8 +7,24 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "allowJs": true
+    "allowJs": true,
+    "isolatedModules": false,
+    "allowSyntheticDefaultImports": true,
+    "types": ["jest", "@testing-library/jest-dom"]
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist", "vite.config.js", "eslint.config.js"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "vite.config.js",
+    "eslint.config.js",
+    "jest.config.ts",
+    "cypress.config.ts",
+    "cypress",
+    "tests",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.cy.ts",
+    "**/*.cy.tsx"
+  ],
 }

@@ -12,23 +12,20 @@ import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin'
 
 export default [
   {
-    ignores: [
-      'dist',
-      'node_modules',
-      'eslint.config.js', 
-      'vite.config.js', 
-    ],
+    ignores: ['dist', 'node_modules', 'eslint.config.js', 'vite.config.js'],
   },
   {
-    
     files: ['**/*.{js,jsx,ts,tsx}'],
 
-   
     languageOptions: {
-      parser: typescriptParser, 
+      parser: typescriptParser,
       ecmaVersion: 'latest',
       sourceType: 'module',
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...cypress.environments.globals,
+      },
       parserOptions: {
         project: './tsconfig.json',
         ecmaFeatures: { jsx: true },
@@ -45,9 +42,10 @@ export default [
       'react-refresh': reactRefresh,
       prettier,
       '@typescript-eslint': typescriptEslintPlugin,
+      cypress,
+      jest,
     },
 
-    
     rules: {
       // Built-in JS recommended
       ...js.configs.recommended.rules,
@@ -59,6 +57,12 @@ export default [
 
       // TypeScript recommended
       ...typescriptEslintPlugin.configs.recommended.rules,
+
+      // Cypress recommended rules
+      ...cypress.configs.recommended.rules,
+
+      // Jest recommended rules
+      ...jest.configs.recommended.rules,
 
       // Example rule overrides:
       'react/jsx-no-target-blank': 'off',
@@ -73,6 +77,22 @@ export default [
 
       // Example TS-specific rule
       '@typescript-eslint/no-unused-vars': ['error'],
+    },
+  },
+  {
+    // 3️⃣ Separate Cypress-Specific ESLint Config
+    files: [
+      'cypress/**/*.ts',
+      'cypress/**/*.tsx',
+      'cypress/**/*.js',
+      'cypress/**/*.jsx',
+    ],
+    plugins: { cypress },
+    env: {
+      'cypress/globals': true, // ✅ Allows Cypress globals like `cy`, `describe`, `it`
+    },
+    rules: {
+      'no-undef': 'off', // Avoids false positives on Cypress globals
     },
   },
 ]
