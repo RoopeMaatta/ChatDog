@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Box, Typography, TextField, Button } from '@mui/material'
+import { Box, Typography, TextField, Button, useTheme } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
+import RoundedTextField from './roundedTexField'
 
 interface ChatMessage {
   id: number
@@ -12,10 +13,13 @@ const ChatBox = () => {
   const [userInput, setUserInput] = useState('')
   const bottomRef = useRef<HTMLDivElement>(null)
 
-  /*useEffect(() => {
+  // Access the MUI theme
+  const theme = useTheme()
+
+  useEffect(() => {
     // Scroll the last message into view whenever messages change.
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])*/
+  }, [messages])
 
   const handleSend = async () => {
     const trimmed = userInput.trim()
@@ -99,8 +103,13 @@ const ChatBox = () => {
               alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
               p: 2,
               borderRadius: 6,
-              bgcolor: msg.role === 'user' ? '#595958' : 'transparent',
               maxWidth: '85%',
+              bgcolor:
+                msg.role === 'user' ? theme.palette.grey[700] : 'transparent',
+              color:
+                msg.role === 'user'
+                  ? theme.palette.getContrastText(theme.palette.grey[700])
+                  : 'inherit',
             }}
           >
             <Typography sx={{ wordBreak: 'break-word' }}>
@@ -121,17 +130,19 @@ const ChatBox = () => {
           width: '100%',
           display: 'flex',
           justifyContent: 'center',
-          bgcolor: '#fff',
+          bgcolor: 'background.paper',
           p: 2,
-          boxShadow: '0 -2px 5px rgba(0,0,0,0.1)',
+          // Use the theme's shadow array (index 4, for example)
+          boxShadow: 4,
         }}
       >
         <Box sx={{ display: 'flex', gap: 2, width: '100%', maxWidth: '90%' }}>
-          <TextField
+          <RoundedTextField
             data-testid='chat-input'
             fullWidth
             multiline
             minRows={1}
+            label=''
             placeholder='Type your message...'
             value={userInput}
             onChange={e => setUserInput(e.target.value)}
@@ -140,10 +151,16 @@ const ChatBox = () => {
           <Button
             data-testid='send-button'
             variant='contained'
-            sx={{ borderRadius: 3 }}
+            sx={{ 
+              color: (theme) => theme.palette.primary.main, 
+            }}
             onClick={handleSend}
           >
-            <SendIcon />
+            <SendIcon 
+              sx={{ 
+                color: 'secondary.main', 
+              }}
+            />
           </Button>
         </Box>
       </Box>

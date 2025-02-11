@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Card, Typography } from '@mui/material'
 import ChatBox from './components/chatBox'
 
 export default function App() {
@@ -7,6 +7,8 @@ export default function App() {
       <Typography
         variant='h3'
         sx={{
+          backgroundColor: 'primary.main', 
+          color: 'text.primary', 
           textAlign: 'center',
           display: 'flex',
           justifyContent: 'center',
