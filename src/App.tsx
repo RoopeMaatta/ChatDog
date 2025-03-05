@@ -1,5 +1,6 @@
 import { Card, Typography } from '@mui/material'
-import { Outlet } from 'react-router-dom'
+import { Outlet, Link } from 'react-router-dom'
+import { Button } from '@mui/material'
 
 export default function App() {
   return (
@@ -19,6 +20,10 @@ export default function App() {
       >
         ChatDog Potata
       </Typography>
+      <Link to='/'> Click to go home u drunk </Link>
+      <Button component={Link} to='chat' variant='contained'>
+        Go to Chat
+      </Button>
       <Outlet />
     </>
   )
