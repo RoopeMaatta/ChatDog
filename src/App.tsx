@@ -1,5 +1,5 @@
 import { Card, Typography } from '@mui/material'
-import ChatBox from './components/chatBox'
+import { Outlet } from 'react-router-dom'
 
 export default function App() {
   return (
@@ -7,8 +7,8 @@ export default function App() {
       <Typography
         variant='h3'
         sx={{
-          backgroundColor: 'primary.main', 
-          color: 'text.primary', 
+          backgroundColor: 'primary.main',
+          color: 'text.primary',
           textAlign: 'center',
           display: 'flex',
           justifyContent: 'center',
@@ -19,7 +19,7 @@ export default function App() {
       >
         ChatDog Potata
       </Typography>
-      <ChatBox />
+      <Outlet />
     </>
   )
 }
